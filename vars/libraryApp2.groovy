@@ -1,13 +1,10 @@
 def call(String repoUrl){
-  pipeline {
+pipeline {
        agent any
-       tools {
-           maven 'maven'
-       }
-       stages {
-           stage("Tools initialization") {
+        stages {
+           stage("system-resource-check") {
                steps {
-                   sh 'mvn --version'
+                   sh 'lscpu'
                    sh 'java -version'
                }
            }
@@ -17,11 +14,10 @@ def call(String repoUrl){
                           url: "${repoUrl}"
                }
            }
-           stage("to-test-maven") {
+           stage("to-check-storage") {
                steps {
-                   sh 'mvn -v'
+                   sh 'lsblk'
                }
            }
        }
 }
- }
